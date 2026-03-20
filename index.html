@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pager Cipher Decoder – All Groupings & Letter Combos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body { margin:0; padding:0; height:100%; }
+    body {
+      min-height:100vh;
+      background: linear-gradient(124deg,#e3eafb 0%,#f8fcff 100%);
+      font-family: "Segoe UI", Arial, sans-serif; color: #263555;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .container {
+      background: #fff;
+      box-shadow: 0 3px 16px 0 rgba(60,80,165,.08), 0 1.5px 3.5px rgba(68,120,184,.07);
+      border-radius: 18px;
+      margin: 3em auto 0 auto;
+      max-width: 730px;
+      width: 97vw;
+      padding: 2.6em 2em 2.6em 2em;
+      display: flex; flex-direction: column; gap: 1.5em;
+      border:1px solid #dde4f3;
+    }
+    h1 {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      text-align: center;
+      color: #2d4a93;
+      letter-spacing: .01em;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 0;
+    }
+    .subheading {
+      text-align: center;
+      color: #6b799c;
+      font-size: 1.13em;
+      margin-bottom: .5em;
+      letter-spacing:.005em;
+    }
+    .instructions {
+      font-size: 1em;
+      background: #eefaeb;
+      color: #236a38;
+      border-left: 6px solid #54ce6f;
+      border-radius: 7px;
+      padding: 0.8em 1.3em;
+      margin: 0.1em 0 0.6em 0;
+    }
+    .mapping {
+      font-size: .97em;
+      background: #f8faff;
+      border-radius: 7px;
+      padding: .7em 1em;
+      margin-top: .55em;
+      word-break:break-word;
+      color:#435;
+    }
+    .input-row {
+      margin: 1.2em 0 1em 0;
+      display: flex; flex-direction: row; gap: 1.15em; flex-wrap:wrap;
+      align-items: start; justify-content: center;
+    }
+    input[type=text] {
+      flex:1 1 320px;
+      font-size:1.21em;
+      padding: 0.70em 0.9em;
+      border-radius: 8px;
+      border:2px solid #b9cffa;
+      background: #f4f7fe;
+      box-sizing: border-box;
+      outline:none;
+      margin-bottom:0;
+      transition:border .16s;
+    }
+    input[type=text]:focus { border:2.5px solid #61a0ea; background:#f9fdff; }
+    button {
+      font-family:inherit;
+      background: #2d4a93;
+      color: #fff;
+      font-weight: 600;
+      font-size:1em;
+      letter-spacing:.03em;
+      border: none;
+      border-radius: 7px;
+      padding:.74em 2.0em;
+      cursor: pointer;
+      margin:0 0 0 .1em;
+      box-shadow:0 2px 6px 0 rgba(60,50,165,0.06);
+      transition:background 0.11s,box-shadow 0.13s;
+    }
+    button.dl-btn {
+      background: #1fb27c;
+      color: #fff;
+      font-size: 1em;
+      margin-left:.5em;
+      font-weight:650;
+      box-shadow:0 2px 6px 0 rgba(80,150,100,0.09);
+      letter-spacing:.02em;
+    }
+    button:hover { background: #4663be }
+    button.dl-btn:hover { background: #25d689; }
+    #output {
+      background: #f9faff;
+      border-radius: 8px;
+      min-height: 2em;
+      font-size: 1.13em;
+      color: #28324a;
+      margin-top: .3em;
+      padding: 1em;
+      line-height:1.7;
+      word-break:break-word;
+      box-shadow:0 2px 6px 0 rgba(60,60,110,0.06);
+    }
+    .parse {margin-bottom:.7em;}
+    .parse code {
+      background:#e6f2fa; color:#375d94;
+      font-size:.97em; padding:.12em .47em;
+      border-radius:5px; font-family:Consolas,monospace;
+      font-weight:700; letter-spacing:.05em;
+    }
+    .lettercombo {margin-left:1.4em; display:inline-block;}
+    @media (max-width:760px) {
+      .container { padding:1.2em .44em; }
+      h1 {font-size:1.29em;}
+      .input-row{flex-direction:column;gap:.5em;}
+      input[type=text]{font-size:1.09em;}
+      button{padding:.54em 1.2em; font-size:.98em;}
+      .mapping{font-size:.94em;}
+    }
+    @media (max-width:480px) {
+      input[type=text] {font-size:.96em;}
+      button, button.dl-btn {padding:.6em 1.2em; font-size:.93em;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pager Cipher Decoder</h1>
+    <div class="subheading">All groupings, all possible letter combinations<br>
+      <span style="color:#568e99;font-size:.96em;font-weight:400;">
+        (with instant download capability)
+      </span>
+    </div>
+    <div class="instructions">
+      Enter a pager code as a continuous number, such as <b>13460</b>.
+      All possible groupings and every valid letter combination for each will be generated below.<br>
+      <b>Download Codes</b> will save your results to a text file.
+    </div>
+    <form onsubmit="decode();return false;">
+      <div class="input-row">
+        <input id="inbox" type="text" placeholder="Example: 13460 or 1771512" autocomplete="off">
+        <button type="submit">Decode</button>
+        <button class="dl-btn" type="button" onclick="downloadTxt()">Download Codes</button>
+      </div>
+    </form>
+    <div id="output"></div>
+    <div class="mapping">
+      <b>Pager Mapping:</b><br>
+      6: <u>A</u>, C, G &nbsp; •&nbsp;
+      8: <u>A</u>, B &nbsp; •&nbsp;
+      0: <u>D</u>, O, Q &nbsp; •&nbsp;
+      3: E &nbsp; •&nbsp;
+      4: F, <u>H</u>, Y &nbsp; •&nbsp;
+      1: I &nbsp; •&nbsp;
+      7: J, L, T &nbsp; •&nbsp;
+      15: K &nbsp; •&nbsp;
+      177: M &nbsp; •&nbsp;
+      17: N &nbsp; •&nbsp;
+      9: P &nbsp; •&nbsp;
+      12: R &nbsp; •&nbsp;
+      5: S &nbsp; •&nbsp;
+      11: U, V &nbsp; •&nbsp;
+      111: W &nbsp; •&nbsp;
+      25: X &nbsp; •&nbsp;
+      2: Z
+    </div>
+  </div>
+  <script>
+    // Pager number to multiple possible letters
+    const pagerReverse = {
+      "6": ["A","C","G"],
+      "8": ["A","B"],
+      "0": ["D","O","Q"],
+      "3": ["E"],
+      "4": ["F","H","Y"],
+      "1": ["I"],
+      "7": ["J","L","T"],
+      "15": ["K"],
+      "177": ["M"],
+      "17": ["N"],
+      "9": ["P"],
+      "12": ["R"],
+      "5": ["S"],
+      "11": ["U","V"],
+      "111": ["W"],
+      "25": ["X"],
+      "2": ["Z"]
+    };
+
+    // Recursive grouping of number string into valid keys
+    function groupings(s) {
+      const memo = {};
+      function helper(str) {
+        if(str.length === 0) return [[]];
+        if (memo[str]) return memo[str];
+        let all = [];
+        for(let len=1; len<=Math.min(3,str.length); ++len) {
+          let head = str.slice(0,len);
+          if (pagerReverse[head]) {
+            for (const rest of helper(str.slice(len))) {
+              all.push([head,...rest]);
+            }
+          }
+        }
+        return memo[str] = all;
+      }
+      return helper(s);
+    }
+
+    // Given array-of-arrays, produce their cartesian product
+    function cartesian(arrays) {
+      if (!arrays.length) return [];
+      return arrays.reduce((a,b) => a.flatMap(d=>b.map(e=>d.concat([e]))), [[]]);
+    }
+
+    let lastRendered = '';
+
+    function decode() {
+      let val = document.getElementById('inbox').value.trim().replace(/\D/g,'');
+      let output = document.getElementById('output');
+      if(!val) {
+        output.innerHTML = "<span style='color:#854;'>Please enter a pager number sequence.</span>";
+        lastRendered = '';
+        return;
+      }
+      let parses = groupings(val);
+      if (!parses.length) {
+        output.innerHTML = "<b>No valid groupings found.</b>";
+        lastRendered = 'No valid groupings!';
+        return;
+      }
+      let lines = [];
+      let html = "";
+      parses.forEach(parts => {
+        let letterSets = parts.map(p=>pagerReverse[p]||["?"]);
+        let combos = cartesian(letterSets);
+        html += `<div class="parse"><code>${parts.join('-')}</code> →<br>`;
+        combos.forEach(arr=>{
+          let line = `${parts.join('-')} = ${arr.join(' ')}`;
+          lines.push(line);
+          html += `<span class="lettercombo">${arr.join(' ')}</span><br>`;
+        });
+        html += "</div>";
+      });
+      output.innerHTML = html;
+      lastRendered = lines.join('\n');
+    }
+
+    function downloadTxt() {
+      if (!lastRendered) {
+        alert('No codes to download. Please decode first.');
+        return;
+      }
+      let blob = new Blob([lastRendered], {type: "text/plain"});
+      let url = URL.createObjectURL(blob);
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = "pager_codes.txt";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(()=>{document.body.removeChild(a); URL.revokeObjectURL(url);},120);
+    }
+  </script>
+</body>
+</html>
